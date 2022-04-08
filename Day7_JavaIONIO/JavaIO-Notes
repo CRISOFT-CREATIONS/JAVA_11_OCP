@@ -1,0 +1,87 @@
+ 				Java IO/NIO
+
+Input: taking data
+Output: Displaying data
+
+Standard Input Device: Keyboard
+Standard Output Device: Monitor/Monitor
+
+System.out.println();   // Output
+1. final class System
+2. out: public static final PrintStream out = null;   //member of System
+class PrintStream extends FilterOutputStream
+    implements Appendable, Closeable
+3. println(): is the member method of PrintStream class    
+   
+class FilterOutputStream extends OutputStream
+abstract class OutputStream implements Closeable, Flushable {
+
+								OutputStream     (Writes data)
+								      |
+								FilterOutputStream
+									  |
+								PrintStream
+								
+System.in: public static final InputStream in = null;								
+InputStream (read data)
+
+InputStream/OutputStream.
+
+File class:
+public class File extends Object implements Serializable, Comparable<File>
+An abstract representation of file and directory pathnames. 
+
+Canonical Path:
+/files1/./dir3/../../dir4/../xyz.txt
+/files1/dir3/../../dir4/../xyz.txt
+/files1/../dir4/../xyz.txt
+/dir4/../xyz.txt
+/xyz.txt
+
+ public Path resolve(Path other)
+
+Resolve the given path against this path.
+
+If the other parameter is an absolute path then this method trivially returns other. 
+If other is an empty path then this method trivially returns this path. 
+Otherwise this method considers this path to be a directory and resolves the given path
+ against this path. 
+In the simplest case, the given path does not have a root component, in which case 
+this method joins the given path to this path and returns a resulting path that 
+ends with the given path. Where the given path has a root component then resolution 
+is highly implementation dependent and therefore unspecified.
+ 
+ "files/file1/file3":  c:\LTI SImant\OCP Batch4\Day7\files\file1\file3
+ "abc.txt"             c:\LTI SImant\OCP Batch4\Day7\abc.txt
+
+normalize()
+"files/./files1/../././././files2/.././././files3"
+"files/files1/../files2/../files3"
+"files/files3"
+
+"files/././../../dir/../.././../files"
+"files/../../dir/../../../files"
+"files/../../../../files"
+"../../../files"
+
+
+Reading and Writing characters:
+
+Reading and Writing bytes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 				

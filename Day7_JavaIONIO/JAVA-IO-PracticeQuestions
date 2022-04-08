@@ -1,0 +1,1720 @@
+Question 1:
+
+Which of the following are valid method implementations?
+
+
+A.	public void outputText(PrintWriter pw, String text){     
+try{         
+pw.write(text);
+}catch(IOException e){         
+System.out.println("exception in writing");     
+}
+}
+
+B.	public void outputText(PrintWriter pw, String text){         
+pw.write(text);         
+if(pw.checkError()) System.out.println("exception in writing"); 
+}
+
+C.	public void outputText(PrintWriter pw, String text){         
+boolean flag = pw.write(text);         
+if(!flag) System.out.println("exception in writing"); 
+}
+
+
+D.	public void outputText(PrintWriter pw, String text){         
+pw.printf(text).print("success"); 
+}
+
+E.	public void outputText(PrintWriter pw, String text){         
+pw.println(text).println("success"); 
+}
+
+
+Question 2:
+
+Which of the following statements regarding java.io.File are true?
+
+
+A.	You can delete the actual file or directory represented by the File object using that object.
+
+B.	You cannot create a File object if a file or directory does not actually exist by that name.
+
+C.	You can create files in any directory using File class's API.
+
+D.	Once created there is no way to change the File object to make it represent a different file or directory.
+
+E.	The same File object can be used to traverse between the directories.
+
+
+Question 3:
+What will the following code print when run?
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+public class PathTest {
+    static Path p1 = Paths.get("c:\\main\\project\\Starter.java");
+    
+    public static String getData(){
+        String data = p1.getName(0).toString();
+        return data;
+    }
+    public static void main(String[] args) {
+        System.out.println(getData());
+    }
+}
+
+
+A.	IllegalArgumentException
+B.	ArrayIndexOutOfBoundsException
+C.	c:\
+D.	c:
+E.	main
+
+Question 4:
+Given:
+Path p1 = Paths.get("c:\\a\\b\\c.java");
+
+What will p1.getName(2).toString() return?
+
+A.	a
+B.	b
+C.	c
+D.	c.java
+
+Question 5:
+What will the following code print when run?
+import java.nio.file.Path;
+import java.nio.file.Paths;
+public class PathTest {
+    static Path p1 = Paths.get("c:\\a\\b\\c");
+    public static String getValue(){
+        String x = p1.getName(1).toString();
+        String y = p1.subpath(1,2).toString();
+        return x+" : "+y;
+    }
+    public static void main(String[] args) {
+        System.out.println(getValue());
+    }
+}
+
+A.	\b : \b
+B.	b : b
+C.	b : b\c\
+D.	a : a\b
+E.	b : b\c
+
+
+Question 6:
+
+What will the following program print when compiled and run?
+
+class Boo implements Serializable {
+    transient int ti = 10;
+    static int si = 20;
+}
+
+public class TestClass
+{
+    public static void main(String[] args) throws Exception
+    {
+     
+        Boo boo = new Boo();
+        boo.si++;
+        System.out.println(boo.ti+" "+boo.si);
+        var fos = new FileOutputStream("c:\\temp\\boo.ser");
+        var os = new ObjectOutputStream(fos);
+        os.writeObject(boo);
+        os.close();
+        
+        var fis = new FileInputStream("c:\\temp\\boo.ser");
+        var is = new ObjectInputStream(fis);
+        boo = (Boo) is.readObject();
+        is.close();            
+        System.out.println(boo.ti+" "+boo.si);
+    }
+}
+
+
+A.	It will not compile.
+
+B.	It will throw an exception at run time.
+
+C.	10 21 
+10 21
+
+D.	10 21 
+10 20
+
+
+E.	10 21 
+0 20
+
+
+F.	10 21 
+0 21
+
+Question 7:
+
+Which of the following method implementations will write a boolean value to the underlying stream?
+
+
+A.	public void usePrintWriter(PrintWriter pw){     
+boolean bval = true;     
+pw.writeBoolean(bval); 
+}
+
+
+B.	public void usePrintWriter(PrintWriter pw) throws IOException{     
+boolean bval = true;     
+pw.write(bval); 
+}
+
+
+C.	public void usePrintWriter(PrintWriter pw) throws IOException{     
+boolean bval = true;     
+pw.print(bval); 
+}
+
+
+D.	public void usePrintWriter(PrintWriter pw) {     
+boolean bval = true;     
+pw.print(bval); 
+}
+
+
+E.	public void usePrintWriter(PrintWriter pw) {     
+boolean bval = true;     
+pw.println(bval); 
+}
+
+
+
+Question 8:
+
+Consider the following code:
+
+//Assume appropriate imports
+public class FileCopier {
+
+    public static void copy(String records1, String records2) throws IOException {
+        try (
+                InputStream is = new FileInputStream(records1);
+                OutputStream os = new FileOutputStream(records2);) {
+            var buffer = new byte[1024];
+            var bytesRead = 0;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+
+        } catch (FileNotFoundException | java.io.InvalidClassException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        copy("c:\\temp\\test1.txt", "c:\\temp\\test2.txt");
+    }
+}
+
+Given that test1.txt exists but test2.txt does not exist, what will happen when the above program is compiled and run?
+
+
+A.	The program will not compile.
+
+B.	The program will compile and run without any exception. test2.txt will be created automatically and contents of test1.txt will be copied to it.
+
+C.	The program will compile and run without any exception but test2.txt will not be created.
+
+D.	An exception will be thrown at run time if the size of test1.txt is not a multiple of 1024.
+
+
+Question 9:
+
+What will the following code print?
+
+   Path p1 = Paths.get("c:\\temp\\test.txt");
+   Path p2 = Paths.get("c:\\temp\\report.pdf");
+   System.out.println(p1.resolve(p2));
+
+
+
+A.	..\report.pdf
+
+B.	temp\report.pdf
+
+C.	report.pdf
+
+D.	c:\temp\report.pdf
+
+
+Question 10:
+
+Given that c:\temp\pathtest is a directory that contains several directories. Each sub directory contains several files but there is exactly one regular file named test.txt within the whole directory structure.
+Which of the given options can be inserted in the code below so that it will print complete path of test.txt?
+
+try{
+    Stream<Path> s = null;
+
+    INSERT CODE HERE
+    s.forEach(System.out::println);
+}catch(IOException ioe){
+    ioe.printStackTrace();
+}
+
+
+A.	s = Files.list(Paths.get("c:\\temp\\pathtest\\**\\test.txt"));
+
+
+B.	s = Files.walk(Paths.get("c:\\temp\\pathtest"), "test.txt");
+
+C.	s = Files.find(Paths.get("c:\\temp\\pathtest"), Integer.MAX_VALUE, (p, a)->p.endsWith("test.txt")&& a.isRegularFile());
+
+D.	s = Files.find(Paths.get("test.txt"));
+
+E.	s = Files.list(Paths.get("c:\\temp\\pathtest"), (p, a)->p.endsWith(".txt")&&a.isRegularFile());
+
+F.	s = Files.walk(Paths.get("c:\\temp\\pathtest"), (p, a)->p.endsWith(".txt")&&a.isRegularFile());
+
+
+Question 11:
+
+Given:
+
+public class TestClass
+{
+    public static void main(String[] args) {
+       String s = "/usr/home1/test.txt";
+       String d = "/usr/home2/test.txt";  
+//INSERT CODE HERE
+
+       }catch(Exception e){ }
+   }
+}
+
+Which of the following code fragments can be inserted in the above code so that the file test.txt can be moved to the destination location even if a file by the same name already exists at the destination location?
+
+A.	try{       
+Files.move(Paths.get(s), Paths.get(d), StandardCopyOption.CREATE_NEW);       
+Files.delete(Paths.get(s));
+
+
+B.	try{       
+Files.move(Paths.get(s), Paths.get(d), StandardCopyOption.REPLACE_EXISTING); 
+
+C.	try(FileChannel in = new FileInputStream(s).getChannel();      
+FileChannel out = new FileOutputStream(d).getChannel()){        
+in.transferTo(0, in.size(), out); 
+}catch(Exception e){ }
+
+
+D.	try{       
+Files.move(Paths.get(s), Paths.get(d)); 
+
+
+
+Question 12:
+
+Given that the file test.txt contains :
+12345678
+What will the following code print when compiled and run?
+
+public static void main(String[] args) throws Exception{
+        try(var fis = new FileInputStream("c:\\temp\\test.txt");
+            var isr = new InputStreamReader(fis)){
+            while(isr.ready()){
+                isr.skip(1);
+                int i = isr.read();
+                char c = (char) i;
+                System.out.print(c);
+            }
+        }
+    }
+
+
+
+A.	It will not compile.
+
+B.	It will throw an exeception when run.
+
+C.	It will print just 2
+
+D.	It will run without any exception but will not print anything.
+
+E.	It will print 2468
+
+
+Question 13:
+
+Which of the following methods are available in java.io.Console?
+
+
+A.	readPassword
+
+B.	reader
+
+C.	writer
+
+D.	readLine
+
+E.	read
+
+F.	getPassword
+
+G.	format
+
+
+Question 14:
+
+What will the following code print when run?
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class PathTest {
+    static Path p1 = Paths.get("c:\\finance\\data\\reports\\daily\\pnl.txt");
+    
+    public static void main(String[] args) {
+        System.out.println(p1.subpath(0, 2));
+    }
+}
+A.	finance\data
+
+B.	finance\data\
+
+C.	\finance\data\reports
+
+D.	c:\finance\data
+
+E.	c:\finance
+
+
+
+Question 15:
+
+Consider the directory structure and its contents shown in the figure.
+(c:\temp is a directory that contains two text files - test1.txt and text2.txt)
+
+What should be inserted at //Line 10 in the following code so that it will write 
+"hello" to text2.txt?
+
+    public static void writeData() throws Exception{
+        var p1 = Paths.get("c:\\temp\\test1.txt");
+        var p2 =  //LINE 10 - INSERT CODE HERE
+        var bw = new BufferedWriter(new FileWriter(p2.toFile()));
+        bw.write("hello");
+        bw.close();
+    }
+
+A.	p1.resolve("text2.txt");
+
+B.	p1.relativize("c:\\temp\\text2.txt");
+
+C.	p1.resolveSibling("text2.txt");
+
+D.	p1.relativize(Paths.get("text2.txt"));
+ 
+
+
+Question 16:
+
+Given:
+
+var bfr = new BufferedReader(new FileReader("c:\\temp\\pathtest\\a.java"));
+var bfw = new BufferedWriter(new FileWriter("c:\\temp\\pathtest\\b.java"));
+String line = null;
+while( (line=bfr.readLine()) != null ){
+    bfw.append(line);
+}
+
+//INSERT CODE HERE
+
+bfw.close();
+
+
+Which of the following lines is required to be inserted in the code above so that content in b.java will be overwritten with the content in a.java?
+
+
+A.	bfr.close();
+
+B.	bfw.close();
+
+C.	bfr.flush();
+
+D.	bfw.flush();
+
+E.	None of the above.
+
+
+
+Question 17:
+
+What will the following code fragment print?
+
+Path p1 = Paths.get("photos\\..\\beaches\\.\\calangute\\a.txt");
+Path p2 = p1.normalize();   "\\beaches\\calangute\\a.txt"
+Path p3 = p1.relativize(p2);
+Path p4 = p2.relativize(p1);
+
+System.out.println(
+    p1.getNameCount()+" "+p2.getNameCount()+" "+
+    p3.getNameCount()+" "+p4.getNameCount());
+
+
+A.	6 4 10 10
+
+B.	7 4 11 10
+
+C.	7 3 8 9
+
+D.	6 3 1 1
+
+
+Question 18:
+
+Given:
+
+import java.io.*;
+class TestClass{
+   public static void main(String[] args) throws Exception{
+        try(var bfr = new BufferedReader(new InputStreamReader(System.in))){
+            System.out.println("Enter Number:");
+            var s = bfr.readLine();
+            System.out.println("Your Number is : "+s);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+   }
+}
+What will be the output if the above code is executed using the following command:
+java TestClass 123
+
+
+A.	Enter Number: (Program is stuck after printing the above) 
+
+B.	Enter Number: Your Number is:123
+
+C.	Enter Number: Your Number is:TestClass 123
+
+D.	An exception stack trace will be printed.
+
+
+
+Question 19:
+
+What will the following code fragment print?
+
+        Path p1 = Paths.get("photos/goa");
+        Path p2 = Paths.get("/index.html");
+        Path p3 = p1.relativize(p2);
+        System.out.println(p3);
+
+
+A.	..\index.html
+
+B.	\index.html
+
+C.	\photos\index.html
+
+D.	\photos\goa\index.html
+
+E.	java.lang.IllegalArgumentException will be thrown
+
+Question 20:
+
+Given the following code:
+
+        var raf = new RandomAccessFile("c:\\temp\\test.txt", "rwd");
+        raf.writeChars("hello");
+        raf.close();
+
+Which of the following statements are correct?
+(Assume that the code has appropriate security permissions.)
+
+
+A.	If the file test.txt does not exist, an attempt will be made to create it.
+
+B.	If the file test.txt does not exist, an exception will be thrown.
+
+C.	If the file test.txt exists, an exception will be thrown.
+
+D.	If the file test.txt exists, it will be overwritten and all the existing data will be lost.
+
+E.	If the file test.txt exists, the given characters will be appended to the end of the existing data.
+
+
+Question 21:
+
+Consider the following code :
+
+  String id = c.readLine("%s", "Enter UserId:"); //1
+  System.out.println("userid is " + id); //2
+  String pwd = c.readPassword("%s", "Enter Password :"); //3
+  System.out.println("password is " + pwd); //4
+
+Assuming that c is a valid reference to java.io.Console and that a user types jack as userid and jj123 as password, what will be the output on the console?
+
+
+A.	Enter UserId:jack userid is jack 
+Enter Password : password is jj123
+
+B.	Enter UserId:jack userid is jack 
+Enter Password :***** password is jj123
+
+C.	Enter UserId:jack userid is jack 
+Enter Password : password is ****
+
+D.	Enter UserId:jack userid is jack 
+Enter Password : password is jj123
+
+E.	It will not compile.
+
+
+
+Question 22:
+
+The following are complete contents of ConsoleTest.java:
+
+import java.io.Console;
+public class ConsoleTest {
+    public static void main(String[] args) {
+        var c = System.console(); //1
+        char[] line = c.readPassword("Please enter your pwd:"); //2
+        System.out.println("Pwd is "+new String(line));         
+    }
+}
+
+What will happen when it is compiled and run from the command line?
+
+
+A.	It will print whatever password is entered by the user.
+
+B.	It will print a garbled version of whatever password is entered by the user.
+
+C.	It will throw an exception at run time.
+
+D.	It will not compile because it does not incorporate exception handling for the readPassword method.
+
+E.	It will not compile because it does not incorporate exception handling for System.console() method.
+
+
+Question 23:
+
+Consider the following code:
+
+import java.io.*;
+public class Test
+{
+   public static void main(String[] args)  throws Exception
+   {
+      var fw = new FileWriter("text.txt");
+      // fw.write("hello"); //1
+      fw.close();
+   }
+}
+
+Which of the following statements are correct?
+
+
+A.	It will throw an exception if  text.txt does not exist.
+
+B.	It will create text.txt file in the filesystem if it does not exist.
+
+C.	It will not throw an exception if text.txt does not exist and it will not create a file either because nothing is being written to the file.
+
+D.	It will throw an exception if //1 is uncommented and if text.txt does not exist.
+
+E.	It will throw an exception if text.txt already exists.
+
+
+Question 24:
+
+Consider the following code:
+
+    public static boolean isValid(Path p){
+        
+        return p.startsWith("temp") && p.endsWith("clients.dat");
+    }
+    
+    public static void writeData() {
+        var p1 = Paths.get("\\temp\\records");
+        var p2 = p1.resolve("clients.dat");
+        System.out.println(p2+" "+isValid(p2));
+        
+    }
+
+What will be printed when the method writeData() is executed?
+
+
+A.	\temp\records\clients false
+
+B.	temp\records\clients.dat false
+
+C.	\temp\records\clients.dat false
+
+D.	temp\records\clients.dat true
+
+E.	clients.dat false
+
+F.	\clients.dat false
+
+
+
+Question 25:
+
+Assume that the following directory exists:
+c:\a\b\c
+
+A File object is created as follows:
+
+//var f = new File("c:\\a\\b\\c\\d\\e");
+File f = new File("c:\\a\\b\\c\\d\\e");
+
+Given that directories d and e do not exist under c, which of the following 
+statements are correct?
+
+A.	The given line of code will throw an exception at run time.
+
+B.	f.mkdir(); will create directory d under c and directory e under d.
+
+C.	f.mkdirs(); will create directory d under c and directory e under d.
+
+D.	f.getParentFile() will return a File Object representing c:\a\b\c\d
+
+E.	None of these.
+
+
+Question 26:
+
+Consider the following code:
+
+//Assume appropriate imports
+public class FileCopier {
+
+    public static void copy(String records1, String records2) throws IOException {
+        try (
+                InputStream is = new FileInputStream(records1);
+                OutputStream os = new FileOutputStream(records2);) {
+            var buffer = new byte[1024];
+            var bytesRead = 0;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+
+        } catch (FileNotFoundException | java.io.InvalidClassException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        copy("c:\\temp\\test1.txt", "c:\\temp\\test2.txt");
+    }
+}
+
+Given that test1.txt exists but test2.txt does not exist, what will happen when the above program is compiled and run?
+
+
+A.	The program will not compile.
+
+B.	The program will compile and run without any exception. test2.txt will be created automatically and contents of test1.txt will be copied to it.
+
+C.	The program will compile and run without any exception but test2.txt will not be created.
+
+D.	An exception will be thrown at run time if the size of test1.txt is not a multiple of 1024.
+
+
+Question 27:
+
+What will the following code print when run?
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class PathTest {
+    static Path p1 = Paths.get("c:\\main\\project\\Starter.java");
+    
+    public static String getRoot(){
+        String root = p1.getRoot().toString();
+        return root;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(getRoot());
+    }
+}
+
+
+
+A.	\
+
+B.	c:
+
+C.	c:\
+
+D.	It will print an empty string.
+
+
+
+Question 28:
+
+Consider the following code:
+
+import java.io.*;
+public class TestClass {
+    
+   public static void main(String[] args) throws Exception {
+      var f = new File("x");   //1
+      var bfr1 = new BufferedReader(new FileReader(f)); //2
+      var bfr2 = new BufferedReader( bfr1 ); //3
+      var pw = new PrintWriter(new FileReader(f)); //4
+   }
+}
+
+Select the correct statements about the above program.
+
+
+A.	// 1 will throw an exception at runtime if a file named "x" does not exist.
+
+B.	//2 and //3 will compile without any error.
+
+C.	//4 will compile without any error.
+
+D.	The complete program will compile without any error.
+
+E.	None of these.
+
+
+Question 29:
+
+Given:
+public static void createFile(String name) throws Exception{
+    try (
+            OutputStream os = new FileOutputStream(name);  ) {
+
+        //INSERT CODE HERE       
+
+        //flush and close the streams that are open
+    }
+}
+Which of the following combinations of the lines of code and their outcome when inserted above, are correct?
+
+A.	var pw = new PrintWriter(os); 
+pw.write(1); 
+Size of the file depends on default character encoding.
+
+B.	os.write(99); 
+A file of size 1 byte will be created.
+
+C.	var bos = new BufferedOutputStream(os); var pw = new PrintWriter(bos); pw.print(99); A file of size 1 byte will be created.
+
+D.	os.writeInt(99); A file of size 4 bytes will be created.
+
+E.	var pw = new PrintWriter(os); pw.writeInt(1); A file of size 4 bytes will be created.
+
+
+
+Question 30:
+
+Consider the following classes:
+
+class Boo {
+    public Boo(){ System.out.println("In Boo"); }
+}
+class BooBoo extends Boo {
+    public BooBoo(){ System.out.println("In BooBoo"); }
+}
+
+class Moo extends BooBoo implements Serializable {
+    int moo = 10; { System.out.println("moo set to 10"); }
+    public Moo(){ System.out.println("In Moo"); }
+}
+
+First, the following code was executed and the file moo1.ser was created successfully:
+
+  Moo moo = new Moo();
+  moo.moo = 20;
+  FileOutputStream fos = new FileOutputStream("c:\\temp\\moo1.ser");
+  ObjectOutputStream os = new ObjectOutputStream(fos);
+  os.writeObject(moo);
+  os.close();
+
+Next, the following code was executed.
+
+  FileInputStream fis = new FileInputStream("c:\\temp\\moo1.ser");
+  ObjectInputStream is = new ObjectInputStream(fis);
+  Moo moo = (Moo) is.readObject();
+  is.close();
+  System.out.println(moo.moo);
+
+Which of the following will be a part of the output of the second piece of code?
+
+
+A.	In Boo
+
+B.	In BooBoo
+
+C.	In Moo
+
+D.	10
+
+E.	20
+
+F.	moo set to 10
+
+
+
+Question 31:
+
+Given:
+public static void reader(String fileName1) throws Exception{
+    try (var fr = new FileReader(fileName1);) {
+        int charRead = 0;
+        while ((charRead = fr.read()) != -1) {
+            System.out.println("Read char " + charRead);
+        }
+    }
+} 
+
+What can be done to the above code to make it read Strings instead of chars?
+
+A.	Chain fr to a StringReader and use its readString method.
+
+B.	Use fr.readString instead of fr.read.
+
+C.	Chain fr to a BufferedReader use its readLine method
+
+D.	Chain fr to a DataReader and use its readLine method.
+
+
+Question 32:
+
+What can be inserted in the following code at //1 so that it will print the number of lines present in the given file?
+
+public void countLines(String filePath) throws Exception{
+    //1
+   System.out.println(ref.count());
+}
+
+
+A.	Stream<String> ref = new BufferedReader(new FileReader("c:\\temp\\test.txt")).lines();
+
+B.	Stream<String> ref = new BufferedReader(new FileReader(Paths.get("c:\\temp\\test.txt"))).lines();
+
+C.	Stream<String> ref = new BufferedReader(new FileReader("c:\\temp\\test.txt")).readLines();
+
+D.	Stream<String> ref = Files.lines("c:\\temp\\test.txt");
+
+
+Question 33:
+
+Given the following code (assume appropriate imports):
+
+public class IOTest {
+    public static void main(String[] args) {
+        var myfile = Paths.get("test.txt");
+        try(var bfr = Files.newBufferedReader(myfile, Charset.forName("US-ASCII") )){
+            String line = null;
+            while( (line = bfr.readLine()) != null){
+                System.out.println(line);
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+}
+
+What will be printed when this code is run if test.txt doesn't exist?
+
+
+A.	java.io.FileNotFoundException: test.txt
+
+B.	java.nio.file.FileNotFoundException: test.txt
+
+C.	java.nio.file.NoSuchFileException: test.txt
+
+D.	java.nio.file.InvalidPathException : test.txt
+
+ 
+
+
+Question 34:
+
+In which of the following cases can the Console object be acquired?
+
+
+A.	When the JVM is started from an interactive command line with explicitly redirecting the standard input and output streams to Console.
+
+B.	When the JVM is started from an interactive command line without redirecting the standard input and output streams.
+
+C.	When the JVM is started in the background with the standard input and output streams directed to Console.
+
+D.	When the JVM is started in the background without redirecting the standard input and output streams.
+
+
+
+Question 35:
+
+What will the following code print?
+
+   Path p1 = Paths.get("c:\\temp\\test.txt");
+   Path p2 = Paths.get("report.pdf");
+   System.out.println(p1.resolve(p2));
+
+
+A.	..\report.pdf
+
+B.	c:\temp\test.txt\report.pdf
+
+C.	c:\temp\report.pdf
+
+D.	It will throw an exception.
+
+
+Question 36:
+
+As a part of an application, you have serialized and stored some objects of a class in the database. At another place in the same application, you deserialize those objects.
+
+After a few months you determine that you need to add one new String field in the class. 
+
+Which of the following statements are correct regarding the above described situation?
+
+A.	The objects serialized earlier cannot be deserialized to the updated class objects.
+
+B.	Objects serialized earlier can be deserialized to the updated class objects by adding a new serialVersionUID field with a value of 0 to the updated class.
+
+C.	No special change is necessary in the updated class. Objects serialized earlier will be deserialized to the updated class objects but the newly added field will be null.
+
+D.	Old serialized objects can be deserialized only if the original class had explicitly defined a serialVersionUID field and if the updated class maintains the same value for that field.
+
+E.	It is possible to deserialize the older objects into the update class objects even if the original class did not explicitly define the serialVersionUID field.
+
+
+Question 37:
+
+Given that the file test.txt is accessible and contains multiple lines, which of the following code fragments will correctly print all the lines from the file?
+
+
+A.	Stream<String> lines = Files.find(Paths.get("test.txt")); 
+lines.forEach(System.out::println); 
+
+
+B.	BufferedReader bfr = new BufferedReader(new FileReader("test.txt")); 
+System.out.println(bfr.readLines());
+
+C.	Stream<String> lines = Files.list(Paths.get("test.txt")); 
+lines.forEach(x->System.out.println(x)); 
+
+D.	Stream<String> lines = Files.lines(Paths.get("test.txt")); 
+lines.forEach(System.out::println); 
+
+
+E.	Stream<String> lines = Files.lines(Paths.get("test.txt"), Charset.defaultCharset()); 
+lines.forEach(s -> System.out.println(s)); 
+
+
+Question 38:
+
+What will the following code fragment print?
+
+        Path p1 = Paths.get("c:\\personal\\.\\photos\\..\\readme.txt");
+        Path p2 = p1.normalize();
+        System.out.println(p2);
+
+
+
+A.	readme.txt
+
+B.	c:\personal\photos\readme.txt
+
+C.	c:\personal\readme.txt
+
+D.	c:\photos\readme.txt
+
+Answer: C
+
+Question 39:
+
+Given:
+String INPUT_FILE = "c:\\temp\\src\\foo.bar\\module-info.java";
+
+Assuming the file exists, which of the following options will print the contents of the file?
+
+A.	Files.lines(INPUT_FILE).forEach(System.out::println);
+
+
+B.	Stream<String> lines = Files.lines(Paths.get(INPUT_FILE)); 
+lines.forEach(System.out::println);
+
+
+C.	Stream<String> lines = Files.readAllLines(Paths.get(INPUT_FILE)); 
+lines.forEach(System.out::println);
+
+
+D.	List<String> lines = Files.readAllLines(Paths.get(INPUT_FILE)); 
+lines.forEach(System.out::println);
+
+
+E.	List<String> lines = Files.lines(Paths.get(INPUT_FILE)); 
+lines.forEach(System.out::println);
+
+
+F.	String[] stra = Files.readLines(Paths.get(INPUT_FILE)); 
+for(String s: stra) System.out.println(s);
+
+
+Question 40:
+
+Given the following code fragment:
+        var raf = new RandomAccessFile("c:\\temp\\test.txt", "rwd");
+
+        //INSERT CODE HERE
+
+        raf.close();
+        
+        var dis = new DataInputStream(new FileInputStream("c:\\temp\\test.txt"));
+        String value = dis.readUTF();
+        System.out.print(value);
+        dis.close();
+
+Which of the following options can be inserted in the above code so that it will print hello world?
+
+
+A.	raf.writeString("hello world");
+
+B.	raf.writeChars("hello world");
+
+C.	raf.writeUTF("hello world");
+
+D.	raf.writeData("hello world");
+
+
+Question 41:
+
+Consider the following code:
+
+    public static void findFiles() throws Exception{
+        Path dir = Paths.get("c:\\temp");
+        
+        //INSERT CODE HERE
+           for(Path p : ds){
+              System.out.println(p);
+           }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }    
+
+What should be inserted in the above code so that it will print all the files with extension gif and jpeg?
+
+A.	try{ DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "*.[gif,jpeg]");
+
+
+B.	try{ DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "*.{gif,jpeg}");
+
+
+C.	try{ DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "*.gif,*.jpeg");
+
+
+D.	try{ DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "gif,jpeg");
+
+
+
+Question 42:
+
+Consider the following class:
+public class Student implements Serializable{
+    public static final long serialVersionUID = 1;
+    public String name;
+    public String grade;
+    public String toString(){ return "["+name+", "+grade+"]"; }
+}
+
+An object of this class was created as follows and was serialized to a file c:\temp\bob.ser:
+        Student s = new Student();
+        s.name = "bob";
+        s.grade = "10";
+After some time the Student class was changed as follows:
+public class Student implements Serializable{
+    public static final long serialVersionUID = 1;
+    public String id="S111";
+    public String name;
+    public String grade;
+    public int age=15;
+    public String toString(){ return "["+id+", "+name+", "+grade+", "+age+"]"; }
+}
+Now, the serialized file is read back as follows:
+   FileInputStream fis = new FileInputStream("c:\\temp\\bob.ser");
+   ObjectInputStream is = new ObjectInputStream(fis);
+   s = (Student) is.readObject();
+   is.close();            
+   System.out.println("Loaded "+s);
+
+What will it print?
+
+
+A.	It will throw an exception while deserializing the file.
+
+B.	Loaded [null, bob, 10, 0]
+
+C.	Loaded [S111, bob, 10, 15]
+
+D.	It will have unpredicable values for id and age.
+
+
+
+
+Question 43:
+
+Consider the following code:
+
+class Bond
+{
+    String ticker; double coupon; java.time.LocalDate maturity;
+}
+
+class Portfolio implements Serializable
+{
+    String accountName;
+    Bond[] bonds;
+}
+
+public class TestClass {
+  public static void main(String[] args) throws Exception{
+     Portfolio portfolio = // get portfolio somehow
+     // serialize portfolio
+  }
+}
+
+Which of the following approaches can be taken independent of each other so that a Portfolio object can be serialized while preserving the state of the Bond objects contained in Portfolio?
+
+
+It can be serialized as it is without any modification.
+ 
+Just have Bond class implement Serializable.
+ 
+Just make 'bonds' field in Portfolio transient.
+
+Change the type of bonds from Bond[] to ArrayList<Bond> bonds;
+
+Make bonds array transient in Portfolio and implement readObject(ObjectInputStream os)  and writeObject(ObjectOutputStream os)  methods to read and write the state of Bond objects explicitly.
+
+
+
+Question 44:
+
+Given:
+    public static void copy1(Path p1, Path p2) throws Exception {
+        Files.copy(p1, p2, StandardCopyOption.REPLACE_EXISTING);
+    }
+
+
+Identify correct statements.    
+
+
+A.	An exception will be thrown at runtime if p2 is a symbolic link.
+
+B.	If p2 is a symbolic link, then that link, and not the target of that link, will be replaced .
+
+C.	If p1 is a symbolic link, then the final target of the link is copied to p2.
+
+D.	An exception will be thrown at runtime if either of p1 or p2 is a symbolic link.
+
+E.	Result is OS dependent if either of p1 or p2 is a symbolic link.
+
+
+
+Question 45:
+
+A programmer is writing a small component that processes a file line by line. The following is the code :
+
+public class LineByLineProcessor {
+    
+   public void processLines(String fullFilePath) throws Exception
+   {
+      // declare and initialize "handle" here
+      String str = null;
+      while( (str = handle.readLine()) != null)
+      {
+          System.out.println("Processing line : "+str);
+      }
+      handle.close();
+    }
+}
+    
+Which of the given options will declare and initialize handle appropriately?
+
+
+A.	Reader handle = new FileReader(fullFilePath);
+
+B.	BufferedReader handle = new BufferedReader(fullFilePath);
+
+C.	BufferedReader handle = new BufferedReader(new File(fullFilePath));
+
+D.	BufferedReader handle = new BufferedReader(new FileReader(fullFilePath));
+
+E.	BufferedReader handle = new BufferedReader(new FileReader( new File(fullFilePath)));
+
+Question 46:
+You have a file named customers.dat in c:\company\records directory. You want to copy all the lines in this file to another file named 
+clients.dat in the same directory and you have the following code to do it:
+
+    public static void writeData() {
+        Path p1 = Paths.get("c:\\company\\records\\customers.dat");
+
+        //LINE 20  - INSERT CODE HERE     
+
+        try (
+                var br = new BufferedReader(new FileReader(p1.toFile()));
+                var bw = new BufferedWriter(new FileWriter(p2.toFile()))) {
+            String line = null;
+            while ((line = br.readLine()) != null) {
+
+                bw.write(line);
+                bw.newLine();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+Which of the following options can be inserted independent of each other at //LINE 20 to make it work?
+Assume that the current directory for the program when it runs is c:\code.
+A.	Path p2 = p1.resolveSibling("\\clients.dat");
+B.	Path p2 = p1.resolveSibling("clients.dat");
+C.	Path p2 = p1.relativize("clients.dat");
+D.	Path p2 = Paths.get("c:", p1.subpath(0, 2).toString(), "clients.dat");
+E.	Path p2 = Paths.get("c:", p1.subpath(1, 2).toString(), "clients.dat");
+
+Answer: BD
+Question 47:
+
+What will the following code print?
+
+   Path p1 = Paths.get("\\photos\\vacation");
+   Path p2 = Paths.get("\\yellowstone");
+   System.out.println(p1.resolve(p2)+"  "+p1.relativize(p2));
+
+
+A.	yellowstone  ..\..\yellowstone
+
+B.	\yellowstone  ..\..\yellowstone
+
+C.	\yellowstone  \yellowstone
+
+D.	\yellowstone  Yellowstone
+
+Answer: 
+
+Question 48:
+
+What will the following code fragment print?
+
+        Path p1 = Paths.get("\\personal\\readme.txt");
+        Path p2 = Paths.get("\\index.html");
+        Path p3 = p1.relativize(p2);
+        System.out.println(p3);
+
+
+A.	\index.html
+
+B.	\personal\index.html
+
+C.	personal\index.html
+
+D.	..\..\index.html
+
+Answer:D
+
+Question 49:
+
+Consider the following code:
+
+        var s = "hello";
+        byte i = 100;
+        var fos = new FileOutputStream("c:\\temp\\data.bin");
+        var dos = new DataOutputStream(fos);
+        //WRITE s to file
+        //WRITE i to file
+        dos.flush(); dos.close(); fos.close();
+
+        var dis = new DataInputStream(new FileInputStream("c:\\temp\\data.bin"));
+        //READ s from file
+        //READ i from file
+
+
+Which methods should be used to write and read s and i to/from the data.bin file?
+
+
+A.	writeString, writeByte and readString, readByte
+
+B.	writeString, writeInt and readString, readInt
+
+C.	writeChars, writeByte and readChars, readByte
+
+D.	writeUTF, writeByte and readUTF, readByte
+
+E.	writeUTF, writeInt and readUTF, readInt
+
+
+Question 50:
+
+
+Given:
+
+Path p  = Paths.get("c:\\temp\\out");
+try{
+    var b = Files.deleteIfExists(p);
+    System.out.println(b);
+}catch(Exception e){
+    e.printStackTrace();
+}
+
+Identify correct statements.
+
+It will print "c:\temp\out" if the file referred to by p is not deleted for any reason.
+ 
+It will print an exception stack trace if p refers to a directory instead of a file.
+ 
+It will print an exception stack trace if p refers to an empty file or a non-empty directory.
+ 
+It will print an exception stack trace the file referred to by p cannot be deleted due to lack of appropriate file permissions.
+ 
+It will print true if p refers to an empty directory.
+
+
+
+Question 51:
+Given the code fragment:
+class Classes implements Serializable{
+	String id;
+}
+class Person{
+	String name;
+	transient String address;
+}
+class Student extends Person implements Serializable{
+	String studentNo;
+	Classes classes=new Classes();
+}
+
+Which fields are serialized in a Student object?
+A. studentNo and classes
+B. studentNo and name
+C. studentNo, classes and name
+D. studentNo, classes, name, and address
+
+
+
+Question 52:
+Given:
+Path p1=Paths.get("/scratch/exam/topsecret/answers");
+Path p2=Paths.get("/scratch/exam/answers/temp.txt");
+Path p3=Paths.get("/scratch/answers/topsecret");
+
+Which two statements print ..\..\..\answers\topsecret? (Choose two.)
+A. System.out.print(p3.relativize(p1));   //  ../../exam/topsecret/answers
+B. System.out.print(p2.relativize(p3));   //  ../../../answers/topsecret
+C. System.out.print(p1.relativize(p3));   //  ../../../answers/topsecret
+D. System.out.print(p3.relativize(p2));   //  ../..//exam/answers/temp.txt
+E. System.out.print(p1.relativize(p2));   //  ../../answers/temp.txt
+F. System.out.print(p2.relativize(p1));   //  ../../topsecret/answers
+
+Answer: BC
+
+Question 53:
+Given the code fragment:
+
+public class Main {
+	public static void main(String[] args) {
+		try {
+			Path path=Paths.get("/u01/work");
+			// line 1
+			System.out.println(attributes.isDirectory());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+You want to examine whether path is a directory. Which code inserted on line 1 will accomplish this?
+A. BasicFileAttributes attributes = Files isDirectory (path);
+B. BasicFileAttributes attributes =Files.getAttribute (path, ‘’insdirectory’’);
+C. BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class); 
+D. BasicFileAttributes attributes = Files.readAttributes (path, FileAttributes.class);
+
+
+
+Question 54:
+Given:
+
+class MyPersistenceDate{
+	String str;
+	private void methodA(){
+		System.out.println(“methodA”);
+	}
+}
+
+You want to implement the java. io.Serializable interface to the MypersistenceData class.
+Which method should be overriden?
+A. The readExternal and writeExternal method
+B. The readExternal method
+C. The writeExternal method
+D. nothing
+
+
+
+Question 55:
+Given:
+public class Main {
+	private String[] strings = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz", "0123456789" };
+
+	public void write(String filename) {
+		// line 1
+		for (String str : strings) {
+			ByteBuffer buffer = ByteBuffer.wrap(str.getBytes());
+			fileChannel.write(buffer);
+		}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void main(String[] args) {
+		Main test=new Main();
+		test.write(“file_to_path”);
+	}
+}
+
+You want to obtain the Filechannel object on line 1. Which code fragment will accomplish this?
+
+
+
+
+A.
+try(FileChannel fileChannel=Channels.newChannel(new FileOutputStream(filename))){
+B.
+try (FileChannel fileChannel = new FileOutputStream(filename).getChannel()) {
+C.
+try (FileChannel fileChannel = new FileOutputStream(new FileChannel(filename))) {
+D.
+try(FileChannel fileChannel=new FileChannel(new FileOutputStream(filename))){
+
+
+Question 56:
+
+Given the code fragment:
+Path currentFile=Paths.get("/scratch/exam/temp.txt");
+Path outputFile=Paths.get("/scratch/exam/new.txt");
+Path directory=Paths.get("/scratch/");
+Files.copy(currentFile, outputFile);
+Files.copy(outputFile, directory);
+Files.delete(outputFile);
+The /scratch/exam/temp.txt file exists. The /scratch/exam/new.txt and /scratch/new.txt files do not exist.
+
+What is the result?
+
+A. /scratch/exam/new.txt and /scratch/new.txt are deleted.
+B. The program throws a FileAlreadyExistsException.
+C. The program throws a NoSuchFileException.
+D. A copy of /scratch/exam/new.txt exists in the /scratch directory and /scratch/exam/new.txt is deleted.
+
+Answer: C
+
+Question 57:
+Given:
+public class Main {
+	public static void main(String[] args) {
+		try {
+			Path path=Paths.get("/u01/work/filestore.txt");
+			boolean result=Files.deleteIfExists(path);
+			if(result) System.out.println(path+" is deleted.");
+			else System.out.println(path+" is not deleted.");
+		} catch (IOException e) {
+			System.out.println("Exception");
+		}
+	}
+}
+Assume the file on path does not exist. What is the result?
+A. The compilation fails.
+B. /u01/work/filestore.txt is not deleted.
+C. Exception
+D. /u01/work/filestore.txt is deleted.
+
+
+Question 58:
+Given:
+public class Main {
+	public static void main(String[] args) {
+		try(BufferedReader in=new BufferedReader(new InputStreamReader(System.in))){
+			System.out.print("Input: ");
+			String input=in.readLine();
+			System.out.print("Echo: "+input);
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+And the command: java Main Helloworld What is the result ?
+A. Input: Echo:
+B. Input: Helloworld Echo: Helloworld
+C. Input:Then block until any input comes from System.in.
+D. Input:Echo: Helloworld
+E. A NullPointerException is thrown at run time.
+
+
+Question 59:
+Given:
+public static void main(String[] args){
+	try(Reader reader1=new FileReader(“File1.txt”);
+      Reader reader2=new FileReader(“File2.txt”);
+      Reader reader3=new FileReader(“File3.txt”)){
+	}catch(IOException ex){
+		Logger.getLogger(Main.class.getName()).log(Level.SEVERE,null,ex);
+	}
+	// line 1
+	System.out.println(“Done”);
+}
+
+When run and all three files exist, what is the state of each reader on Line 1?
+A. All three readers are still open.
+B. All three readers have been closed.
+C. The compilation fails.
+D. Only reader1 has been closed.
+
+Answer: B
+
+Question 60:
+Given:
+String originalPath = “data\\projects\\a-project\\..\\..\\another-project”; 
+Path path = Paths.get(originalPath);
+System.out.print(path.normalize());
+What is the result?
+
+A. data\another-project
+B. data\projects\a-project\another-project
+C. data\\projects\\a-project\\..\\..\\another-project
+D. data\projects\a-project\..\..\another-project
+
+Answer: A
+
+
+
+
+
+
+
+Question 61:
+Given:
+public class SerializedMessage implements Serializable{
+	String message;
+	LocalDatetime createdTime;
+	transient LocalDateTime updatedDateTime;
+	SerializedMessage(String message){
+		this.message=message;
+		this.createdTime=LocalDateTime.now();
+	}
+	private void readObject(ObjectInputStream in){
+		try{
+			in.defaultReadObject();
+			this.updatedTime=LocalDateTime.now();
+		}catch(IOException | ClassNotFoundException e){
+			e.printStackTrace();
+		}
+	}
+}
+
+When is the readObject method called?
+A. before this object is deserialized
+B. after this object is deserialized
+C. before this object Is serialized
+D. The method is never called.
+E. after this object is serialized
+
+
+
+Question 62:
+Given the code fragment:
+Path source = Paths.get(“/repo/a/a.txt”);
+Path destination = Paths.get(“/repo”);
+Files.move(source, destination); // line 1
+Files.delete (source); // line 2
+Assuming the source file and destination folder exist, what Is the result?
+
+A. A java.nio.file.FileAlreadyExistsException is thrown on line 1.
+B. A java.nio.file.NoSuchFileException is thrown on line 2.
+C. A copy of /repo/a/a.txt is moved to the /repo directory and /repo/a/a.txt is deleted.
+D. a.txt is renamed repo.
+
+
+
+
+Question 63:
+Given:
+public class Main {
+    public static void main(String[] args) {
+        try(BufferedReader br=new BufferedReader(new java.io.InputStreamReader(System.in))){
+            String input=br.readLine();
+            System.out.println("Input String was: "+input);
+        }catch (IOException e) {
+	e.printStackTrace();
+        }
+    }
+}
+Which is true?
+
+A. System.out is the standard output stream
+B. The stream is open only when System.out is called.
+C. System.in cannot reassign the other stream.
+D. System.out is an instance of java.io.OutputStream by default.
+E. System.in is the standard input stream
+F. The stream is already open.
+
+
+
+
+Question 64:
+Given:
+
+try {
+	// line 1
+	lines.map(l->l.toUpperCase())
+		.forEach(line->{
+			try {
+				Files.write(Paths.get("files/copyabc.txt"),
+line.getBytes(),StandardOpenOption.CREATE);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+You want to obtain the Stream object on reading the file. Which code inserted on line 1 will accomplish this?
+
+A. var lines = Files.lines(Paths.get(INPUT_FILE_NAME));
+B. Stream lines = Files.readAllLines(Paths.get(INPUT_FILE_NAME));
+C. var lines = Files.readAllLines(Paths.get(INPUT_FILE_NAME));
+D. Stream<String> lines = Files.lines(INPUT_FILE_NAME);
+
+Question 65:
+Given:
+public class Main {
+	public static void checkConfiguration(String fileName) {
+		File file=new File(fileName);
+		if(!file.exists()) {
+			throw new Error("Fatal Error: Configuration File, "+fileName+", is missing.");
+		}
+	}
+	public static void main(String[] args) {
+		checkConfiguration("App.config");
+		System.out.println("Configuration is OK");
+
+	}
+}
+
+If file "App.config" is not found, what is the result?
+
+A. Configuration is OK
+B. The compilation fails.
+C. Exception in thread "main" java.lang.Error:Fatal Error: Configuration File, App.config, is missing.
+D. nothing
+ 
