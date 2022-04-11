@@ -11,7 +11,7 @@ public class ReaderDemo {
 		Reader reader = new FileReader("files/test.txt");
 		
 //		System.out.println(reader.read());					// Printing the Ascii value for the first character
-//		System.out.println((char) reader.read());			// Letter print
+		System.out.println((char) reader.read());			// Letter print
 		
 //		int ch;
 //		while((ch=reader.read()) != -1)
